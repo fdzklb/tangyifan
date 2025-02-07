@@ -31,4 +31,4 @@ export const isBrowser = () => {
 export const fetchUrl =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000/api"
-    : "https://leofang.vercel.app/api";
+    : "https://gewinda.vercel.app/api";

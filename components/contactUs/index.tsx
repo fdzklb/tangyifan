@@ -5,20 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { fetchUrl } from "@/lib/utils";
 import { userInfo } from "@/constants";
 const ContactUs = () => {
-  const [open, setOpen] = React.useState(false);
-
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     phone: "",
     message: "",
@@ -34,24 +26,27 @@ const ContactUs = () => {
     });
   };
 
-  const onSubmit = () => {
-
-  }
-  
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("firstName", formData.firstName);
-    data.append("lastName", formData.lastName);
-    data.append("email", formData.email);
-    data.append("phone", formData.phone);
-    data.append("message", formData.message);
-    onSubmit(data);
+    console.log(formData);
+    // onSubmit(data);
+    try {
+      await fetch(`${fetchUrl}/customers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.log("Something is up...", error);
+    }
   };
+  
 
   return (
-    <div className="absolute top-[20%] text-gray-900 flex justify-around">
-      <div className="flex">
+    <div className="absolute top-[10%] text-gray-900 flex justify-around">
+      <div className="flex gap-4">
         <div className="bg-slate-300 p-8 rounded-lg opacity-80">
           <div className="">
             <p className="text-3xl">Send us a message.</p>
@@ -59,58 +54,7 @@ const ContactUs = () => {
               Got questions? Need to chat with an expert?
             </p>
           </div>
-          <div className="flex flex-col gap-[20px]">
-            <div className="group cursor-pointer h-[55px] px-[25px] pl-[10px] flex justify-center gap-[10px] items-center text-[14px] tracking-[-0.5px] shadow-sm text-noovo-black rounded-[10px]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-calendar-check"
-              >
-                <path d="M8 2v4"></path>
-                <path d="M16 2v4"></path>
-                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                <path d="M3 10h18"></path>
-                <path d="m9 16 2 2 4-4"></path>
-              </svg>
-              <div className="flex items-center">
-                <div
-                  onClick={(e) => {
-                    setOpen(true);
-                    e.stopPropagation();
-                  }}
-                >
-                  Send us your infomation
-                </div>
-                <div className="w-[0px] opacity-[0] overflow-hidden flex justify-end group-hover:w-[21px] group-hover:opacity-[1] transition-all duration-500">
-                  <svg
-                    width="16"
-                    height="11"
-                    viewBox="0 0 16 11"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="shrink-0"
-                  >
-                    <path
-                      d="M14.667 5.72222L0.500324 5.72222ZM8.59556 10.4444L14.667 5.72222ZM8.59556 1L14.667 5.72222Z"
-                      fill="currentColor"
-                    ></path>
-                    <path
-                      d="M14.667 5.72222L0.500324 5.72222M14.667 5.72222L8.59556 10.4444M14.667 5.72222L8.59556 1"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col gap-4 pt-8">
             <button
               className="group h-[55px] px-[25px] pl-[10px] flex justify-center gap-[10px] items-center text-[14px] tracking-[-0.5px] shadow-sm text-noovo-black rounded-[10px] bg-noovo-offwhite"
               type="button"
@@ -189,22 +133,22 @@ const ContactUs = () => {
         </div>
 
         <div
-          className="text-gray-900 bg-slate-300 rounded-lg opacity-80"
-          style={{ display: open ? "block" : "none" }}
+          className="text-gray-900 bg-slate-300 rounded-lg opacity-80 p-6"
         >
+          <p className="text-3xl pb-6">Send us your infomation.</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <Label
-                htmlFor="firstName"
+                htmlFor="first_name"
                 className="block text-sm font-medium text-gray-700"
               >
                 First Name
               </Label>
               <Input
                 type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
+                id="first_name"
+                name="first_name"
+                value={formData.first_name}
                 onChange={handleChange}
                 className="mt-1"
                 maxLength={30}
@@ -212,16 +156,16 @@ const ContactUs = () => {
             </div>
             <div>
               <Label
-                htmlFor="lastName"
+                htmlFor="last_name"
                 className="block text-sm font-medium text-gray-700"
               >
                 Last Name
               </Label>
               <Input
                 type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
+                id="last_name"
+                name="last_name"
+                value={formData.last_name}
                 onChange={handleChange}
                 className="mt-1"
                 maxLength={30}
