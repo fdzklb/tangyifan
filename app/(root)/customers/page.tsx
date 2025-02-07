@@ -16,12 +16,12 @@ type Repo = {
   last_name: string
   email: string
   phone: string
+  content: string
 }
 
 export default async function Customers() {
   const res = await fetch(`${fetchUrl}/customers`);
   const repo = await res.json();
-  // const repo = [];
   return (
     <div className="relative flex justify-center sm:w-full md:w-3/4">
       <Table>
@@ -30,17 +30,22 @@ export default async function Customers() {
             <TableHead>email</TableHead>
             <TableHead>first_name</TableHead>
             <TableHead>last_name</TableHead>
-            <TableHead className="text-right">phone</TableHead>
+            <TableHead>phone</TableHead>
+            <TableHead>content</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {(repo || []).map((invoice: Repo) => (
+          {repo.map((invoice: Repo) => (
             <TableRow key={invoice.email}>
+              <TableCell className="font-medium">
+                {invoice.email}
+              </TableCell>
               <TableCell className="font-medium">
                 {invoice.first_name}
               </TableCell>
               <TableCell>{invoice.last_name}</TableCell>
               <TableCell>{invoice.phone}</TableCell>
+              <TableCell>{invoice.content}</TableCell>
             </TableRow>
           ))}
         </TableBody>

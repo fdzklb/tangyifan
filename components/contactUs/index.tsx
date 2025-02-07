@@ -13,7 +13,7 @@ const ContactUs = () => {
     last_name: "",
     email: "",
     phone: "",
-    message: "",
+    content: "",
   });
 
   const handleChange = (
@@ -28,7 +28,7 @@ const ContactUs = () => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    console.log(JSON.stringify(formData));
     // onSubmit(data);
     try {
       await fetch(`${fetchUrl}/customers`, {
@@ -206,15 +206,15 @@ const ContactUs = () => {
             </div>
             <div>
               <Label
-                htmlFor="message"
+                htmlFor="content"
                 className="block text-sm font-medium text-gray-700"
               >
                 Message
               </Label>
               <Textarea
-                id="message"
-                name="message"
-                value={formData.message}
+                id="content"
+                name="content"
+                value={formData.content}
                 onChange={handleChange}
                 className="mt-1"
               />

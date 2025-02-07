@@ -1,7 +1,7 @@
 import { db } from "@/db";
 export async function GET() {
   try {
-    const data = await db.customers.findMany({
+    const data = await db.customer.findMany({
       take: 99,
       select: {
         first_name: true,
@@ -22,14 +22,15 @@ export async function GET() {
 
 export async function POST(request: Request) {
   const { first_name, last_name, phone, content, email } = await request.json();
+  console.log("Request Body:", first_name, last_name, phone, content, email);
 
   try {
-    const existingPost = await db.customers.findUnique({
-      where: { email },
+    const existingcust = await db.customer.findUnique({
+      where: { email, phone },
     });
-
-    if (!existingPost) {
-      await db.blog.create({
+console.log(existingcust);
+    if (!existingcust) {
+      await db.customer.create({
         data: {
           first_name,
           last_name,
