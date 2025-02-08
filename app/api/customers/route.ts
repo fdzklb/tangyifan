@@ -26,9 +26,12 @@ export async function POST(request: Request) {
 
   try {
     const existingcust = await db.customer.findUnique({
-      where: { email, phone },
+      where: {
+        email,
+        phone,
+      },
     });
-console.log(existingcust);
+
     if (!existingcust) {
       await db.customer.create({
         data: {

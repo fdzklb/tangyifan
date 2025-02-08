@@ -15,6 +15,7 @@ const ContactUs = () => {
     phone: "",
     content: "",
   });
+  const [mess, setMess] = useState({ message: "", status: false });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,23 +27,38 @@ const ContactUs = () => {
     });
   };
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(JSON.stringify(formData));
     // onSubmit(data);
     try {
-      await fetch(`${fetchUrl}/customers`, {
+      const res = await fetch(`${fetchUrl}/customers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+      if (res.status === 200) {
+        setFormData({
+          first_name: "",
+          last_name: "",
+          email: "",
+          phone: "",
+          content: "",
+        });
+      }
+      setMess({
+        message: "successfully received your message.",
+        status: true,
+      });
     } catch (error) {
-      console.log("Something is up...", error);
+      setMess({ message: "Something went wrong, please try again.", status: false });
+    } finally {
+      setTimeout(() => {
+        setMess({ message: "", status: false });
+      }, 3000);
     }
   };
-  
 
   return (
     <div className="absolute top-[10%] text-gray-900 flex justify-around">
@@ -132,9 +148,7 @@ const ContactUs = () => {
           </div>
         </div>
 
-        <div
-          className="text-gray-900 bg-slate-300 rounded-lg opacity-80 p-6"
-        >
+        <div className="text-gray-900 bg-slate-300 rounded-lg opacity-80 p-6">
           <p className="text-3xl pb-6">Send us your infomation.</p>
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
@@ -222,6 +236,11 @@ const ContactUs = () => {
             <Button type="submit" className="mt-4">
               Submit
             </Button>
+            {
+              mess.message && (
+                <div className={ mess.status ? 'text-green-400' : 'text-red-500'}>{mess.message}</div>
+              )
+            }
           </form>
         </div>
       </div>
