@@ -2,14 +2,11 @@ import * as React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { products } from "@/constants";
-// import { getSortedBlogsMetaData, getBlogBySlug } from "@/lib/resolveMarkdown";
+export async function generateStaticParams() {
+  return products.map((item) => ({ productId: item.productId.toString() }))
+}
 
-// export async function generateStaticParams() {
-//   let posts = await getSortedBlogsMetaData();
-//   return posts.map((post: { slug: any; }) => ({
-//     slug: post.slug,
-//   }));
-// }
+export const dynamicParams = true // or false, to 404 on unknown paths
 
 export default async function Page(props: { params: { productId: string } }) {
   const { productId } = await props.params;
