@@ -3,11 +3,8 @@ import { BlogListItem } from "./blog-list-item";
 
 export type BlogType = {
   productId: number;
-  bgImgPath1: string;
-  bgImgPath2: string;
   title?: string;
   description: string;
-  link: string;
 }
 
 type BlogListProps = {
@@ -27,14 +24,18 @@ export const BlogList = async ({ blogs }: BlogListProps) => {
   }
 
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 gap-y-5">
-      {blogs.map((el, idx) => (
-        <li
-          key={idx}
-        >
-          <BlogListItem blog={el} />
-        </li>
-      ))}
+    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 gap-y-5">
+      {blogs.map((el, idx) => 
+      {
+        return (
+          <li
+            key={el.productId}
+          >
+            <BlogListItem blog={el} />
+          </li>
+        )
+      }
+      )}
     </ul>
   );
 };

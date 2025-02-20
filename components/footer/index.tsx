@@ -5,17 +5,10 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 // import { SocialMediaList } from "@/features/home/compoents/social-media";
-import { cn } from "@/lib/utils";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
 import { createSubscriber } from "@/lib/actions";
 import { useActionState } from "react";
 import { Wrapper } from "../wrapper";
-import { menus } from "@/constants";
+import { footMenus, footLinks } from "@/constants";
 
 import {
   Rss,
@@ -34,21 +27,18 @@ export const Footer = () => {
   );
 
   return (
-    <footer className="px-6 pb-12 bg-gray-900 text-gray-400">
+    <footer className="px-6 pb-12 bg-slate-700 text-gray-300">
       <Wrapper className="flex flex-col items-center justify-center space-y-1 pt-12 text-sm md:flex-row md:space-x-4 md:space-y-0">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-4 ">
             <div className="space-y-4">
               <h3 className="text-md font-semibold">Menu</h3>
-              <ul className="space-y-2 text-sm">
-                {menus.map((el: any) => (
-                  <div
-                    key={el.link}
-                    className="hover:text-gray-400"
-                  >
+              <ul className="space-y-2 text-lg">
+                {footMenus.map((el: any) => (
+                  <div key={el.link}>
                     <Link
                       href={el.link}
-                      className={"py-2 hover:text-gray-700"}
+                      className={"py-2 text-gray-200 hover:text-gray-100"}
                     >
                       <span>{el.label}</span>
                     </Link>
@@ -58,57 +48,35 @@ export const Footer = () => {
             </div>
             <div className="space-y-4">
               <h3 className="text-md font-semibold">Links</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <a
-                    href="mailto:w3tsadev@gmail.com"
-                    className="text-gray-400 hover:text-gray-700"
-                  >
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <Link
-                    href="/terms-of-services"
-                    className="text-gray-400 hover:text-gray-700"
-                  >
-                    Terms of Services
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy-policy"
-                    className="text-gray-400 hover:text-gray-700"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/sitemap.xml"
-                    className="text-gray-400 hover:text-gray-700"
-                  >
-                    Sitemap
-                  </Link>
-                </li>
+              <ul className="space-y-2 text-lg">
+                {footLinks.map((el) => (
+                  <li key={el.link}>
+                    <Link
+                      href={el.link}
+                      className="text-gray-200 hover:text-gray-100"
+                    >
+                      {el.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="space-y-4">
-              <p className="text-gray-400 text-lg">
+              <p className="text-xl">
                 Do you want to be the first to learn our latest news?
               </p>
               <form action={dispatch}>
-                <div className="flex space-x-2 w-80">
+                <div className="flex space-x-2">
                   <Input
                     type="email"
                     name="email"
                     id="email"
                     placeholder="Enter your email"
-                    className="flex-1"
+                    className="flex-1 min-w-50"
                     defaultValue=""
                     aria-describedby="email-error"
                   />
-                  <Button type="submit" disabled={isPending}>
+                  <Button type="submit" disabled={isPending} className="bg-slate-600 hover:bg-slate-400">
                     <ArrowRight />
                   </Button>
                 </div>

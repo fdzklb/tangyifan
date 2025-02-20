@@ -8,7 +8,7 @@ export default async function Page() {
         <div className="flex flex-col gap-8 xl:w-[75%] w-[90%] my-8">
           <div className="text-center text-5xl text-gray-600">All PRODUCTS</div>
           <div className="text-center text-2xl text-gray-600">
-            OUR LUXURY OUTDOOR FURNITURE COLLECTIONS
+            ALL OF OUR FILTRATION PRODUCTS
           </div>
         </div>
         <div className="flex justify-center xl:w-[80%] w-[90%] text-lg my-8 mx-2">

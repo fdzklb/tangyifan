@@ -17,7 +17,10 @@ const blogs = {
 };
 
 // 获取排序后的所有文章数据的metaData
-export const getSortedBlogsMetaData = async (category = '', blogsDir = blogs.blogsDir) => {
+export const getSortedBlogsMetaData = async (
+  category = "",
+  blogsDir = blogs.blogsDir
+) => {
   const blogsDirectory = path.join(process.cwd(), blogsDir);
   const blogNames = await fsPromises.readdir(blogsDirectory);
   let allblogsData = blogNames
@@ -30,7 +33,8 @@ export const getSortedBlogsMetaData = async (category = '', blogsDir = blogs.blo
       });
       // use gray-matter to parse the blog metadata section
       const matterData = matter(mdContent);
-      const { date, bgImgPath, title, description, categories } = matterData.data;
+      const { date, bgImgPath, title, description, categories } =
+        matterData.data;
       return {
         slug,
         date,
@@ -40,10 +44,12 @@ export const getSortedBlogsMetaData = async (category = '', blogsDir = blogs.blo
         categories,
       };
     });
-  
+
   // 如果传入了分类，则只返回该分类下的文章
-  if(category) {
-    allblogsData = allblogsData.filter((blog) => blog.categories.split(',')?.includes(category));
+  if (category) {
+    allblogsData = allblogsData.filter((blog) =>
+      blog.categories.split(",")?.includes(category)
+    );
   }
   // 按照日期从近到远排序
   return allblogsData.sort(({ date: a }, { date: b }) => {
@@ -52,7 +58,6 @@ export const getSortedBlogsMetaData = async (category = '', blogsDir = blogs.blo
     return timeB.getTime() - timeA.getTime();
   });
 };
-
 
 // 获取所有文章id
 export const getAllSlug = async (blogsDir = blogs.blogsDir) => {
@@ -68,7 +73,10 @@ export const getAllSlug = async (blogsDir = blogs.blogsDir) => {
 };
 
 // 通过文章id获取文章内容
-export const getBlogBySlug = async (slug: string, blogsDir = blogs.blogsDir) => {
+export const getBlogBySlug = async (
+  slug: string,
+  blogsDir = blogs.blogsDir
+) => {
   const blogPath = path.join(process.cwd(), blogsDir, `${slug}.md`);
   const mdContent = await fsPromises.readFile(path.join(blogPath), {
     encoding: "utf-8",
@@ -91,4 +99,47 @@ export const getBlogBySlug = async (slug: string, blogsDir = blogs.blogsDir) => 
     htmlContent: content.value,
     description: matterData.data.description,
   };
+};
+
+// 根据productId获取public/imgs/products下的图片路径
+export const getProductImagePath = async (productId: string | number) => {
+  // 进入到public/imgs/products/pd${productId}目录下，获得所有.jpg .png .webp文件的路径
+  const imagePath = path.join(
+    process.cwd(),
+    "public",
+    "imgs",
+    "products",
+    `pd${productId}`
+  );
+  const paths = await fsPromises.readdir(imagePath);
+  const allImages = paths
+    .filter((file) => {
+      const extname = path.extname(file);
+      return extname === ".jpg" || extname === ".png" || extname === ".webp";
+    })
+    .map((file) =>
+      path.join("/imgs", "products", `pd${productId}`, file).replaceAll("\\", "/")
+    );
+
+  return allImages;
+  // 按照文件名a-z排序
+  // return allImages.then((files) =>
+  //   files.sort((a, b) => {
+  //     const nameA = path.basename(a);
+  //     const nameB = path.basename(b);
+  //     return nameA.localeCompare(nameB);
+  //   }),
+  // );
+};
+
+export const getPdsHomeImg = async (productIds: number[]) => {
+  return await productIds.map(async (productId) => {
+    const imgs = await getProductImagePath(productId.toString()).then((files) =>
+      files.slice(0, 2)
+    );
+    return {
+      productId: productId.toString(),
+      imgs,
+    };
+  });
 };

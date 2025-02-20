@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from "next/image";
-import img from "@/public/imgs/index.png";
+import img from "@/public/imgs/deskop.jpg";
 import ContactUs from '@/components/contactUs';
 
 
@@ -10,7 +10,6 @@ const ContactPage: React.FC = () => {
         <Image
           src={img}
           alt={"img"}
-          width={1920}
           className="min-h-[calc(100vh-64px)] w-full"
         />
         <div
