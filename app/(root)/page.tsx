@@ -43,19 +43,18 @@ export default async function Page() {
   return (
     <div className="w-full font-serif bg-slate-100 gap-10">
       <div className="relative flex justify-center w-full text-gray-100">
-        <picture>
-          <source media="(min-width: 640px)" srcSet={ipad} />
-          <source media="(min-width: 300px)" srcSet={mobile} />
-          {/* <source media="(min-width: 1000px)" srcSet={desktop} />
-          <source media="(min-width: 640px)" srcSet={ipad} />
-          <source media="(min-width: 300px)" srcSet={mobile} /> */}
-          <img
-            {...rest}
-            style={{ width: "100%", objectFit: "cover" }}
-            alt={rest.alt || ""}
-          />
-        </picture>
-        {/* <Image src={desktop} alt="img" className="min-h-[calc(100vh-64px)] w-full" /> */}
+        <div style={{ width: "100%" }}>
+          <picture>
+            <source media="(min-width: 640px)" srcSet={ipad} />
+            <source media="(min-width: 300px)" srcSet={mobile} />
+            <img
+              {...rest}
+              style={{ width: "100%", objectFit: "cover" }}
+              alt={rest.alt || ""}
+            />
+          </picture>
+        </div>
+        {/* <Image src={'/imgs/deskop1.jpg'} width={500} height={400} alt="gewinda" className="w-full" /> */}
         {/* <Image
           src={'/imgs/deskop.jpg'}
           // src={desktop}
@@ -76,7 +75,7 @@ export default async function Page() {
             backgroundColor: "rgba(0, 0, 0, 0.3)", // 蒙层颜色和透明度
           }}
         />
-        <div className="absolute flex flex-col gap-4 left-4 sm:left-6 md:left-12 lg:left-[10%] top-[30%]">
+        <div className="absolute flex flex-col gap-4 left-4 sm:left-6 md:left-12 lg:left-[10%] sm:top-[25%] top-[20%]">
           <div
             className={cn(
               "flex md:gap-10 justify-center flex-col text-2xl md:text-4xl lg:text-6xl animate__animated animate__bounceInLeft"

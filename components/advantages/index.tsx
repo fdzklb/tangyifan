@@ -32,8 +32,7 @@ const advantages = [
   },
   {
     img: "/imgs/company/3.png",
-    title:
-      "Expert Team Drives Collaboration in Water Filtration Excellence",
+    title: "Expert Team Drives Collaboration in Water Filtration Excellence",
     descriptions: [
       {
         title: "Professional Team",
@@ -119,7 +118,13 @@ export default function Advantages() {
                   : ""
               )}
             >
-              <ContainImage src={advantages[0].img} alt={"img"} maxWidth={600} />
+              {/* <ContainImage src={advantages[0].img} alt={"img"} maxWidth={600} /> */}
+              <Image
+                src={advantages[0].img}
+                alt={"gewinda"}
+                width={600}
+                height={600}
+              />
             </div>
             <div
               className={cn(
@@ -149,7 +154,13 @@ export default function Advantages() {
                   : ""
               )}
             >
-              <ContainImage src={advantages[1].img} alt={"img"} maxWidth={600} />
+              {/* <ContainImage src={advantages[1].img} alt={"img"} maxWidth={600} /> */}
+              <Image
+                src={advantages[1].img}
+                alt={"gewinda"}
+                width={600}
+                height={600}
+              />
             </div>
             <div
               className={cn(
@@ -180,7 +191,13 @@ export default function Advantages() {
                   : ""
               )}
             >
-              <ContainImage src={advantages[2].img} alt={"img"} maxWidth={800} />
+              <Image
+                width={600}
+                height={600}
+                src={advantages[2].img}
+                alt={"gewinda"}
+              />
+              {/* <ContainImage src={advantages[2].img} alt={"img"} maxWidth={800} /> */}
             </div>
             <div
               className={cn(
